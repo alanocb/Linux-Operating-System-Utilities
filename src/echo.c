@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-// Function to print usage information
 void print_usage() {
     printf("Usage: ./echo <material> <distance_in_meters> <message>\n");
     printf("Materials:\n");
@@ -14,26 +13,23 @@ void print_usage() {
 }
 
 int main(int argc, char *argv[]) {
-    // Check if --help option is provided
     if (argc == 2 && strcmp(argv[1], "--help") == 0) {
         print_usage();
         return 0;
     }
 
-    // Check if no material and distance provided
     if (argc == 1 || argv[1][0] != '-') {
-        // No material and distance provided, concatenate all arguments into message
         if (argc < 2) {
             fprintf(stderr, "Usage: %s <message>\n", argv[0]);
             return 1;
         }
 
-        char *message = (char *)malloc(1); // Allocate memory for an empty string
-        message[0] = '\0'; // Ensure the string is null-terminated
+        char *message = (char *)malloc(1);
+        message[0] = '\0';
         for (int i = 1; i < argc; i++) {
             strcat(message, argv[i]);
             if (i != argc - 1) {
-                strcat(message, " "); // Add space between words if not the last word
+                strcat(message, " ");
             }
         }
 
@@ -43,11 +39,9 @@ int main(int argc, char *argv[]) {
             sleep(2);
         }
 
-        // Free dynamically allocated memory
         free(message);
     }
 
-    // Material and distance provided, print message once with delay
     if (argc < 4) {
         fprintf(stderr, "Usage: %s <material> <distance_in_meters> <message>\n", argv[0]);
         return 1;
@@ -56,7 +50,6 @@ int main(int argc, char *argv[]) {
     char *material = NULL;
     double speed_of_sound_m_per_sec = 0.0;
 
-    // Parse material
     switch (argv[1][1]) {
         case 'a':
             material = "air";
@@ -80,30 +73,23 @@ int main(int argc, char *argv[]) {
             return 1;
     }
 
-    // Parse distance
     double distance = atof(argv[2]);
 
-    char *message = (char *)malloc(1); // Allocate memory for an empty string
-    message[0] = '\0'; // Ensure the string is null-terminated
-    for (int i = 3; i < argc; i++) { // Start from index 3
+    char *message = (char *)malloc(1);
+    message[0] = '\0';
+    for (int i = 3; i < argc; i++) {
         strcat(message, argv[i]);
         if (i != argc - 1) {
-            strcat(message, " "); // Add space between words if not the last word
+            strcat(message, " ");
         }
     }
 
-
-    // Calculate round-trip distance
     double round_trip_distance = 2 * distance;
-
-    // Calculate delay based on round-trip distance and speed of sound
     double delay_seconds = round_trip_distance / speed_of_sound_m_per_sec;
 
-    // Print material and speed of sound
     printf("Material: %s \tSpeed of sound: %.2f m/s \tDelay: %.2f\n", material, speed_of_sound_m_per_sec, delay_seconds);
 
     sleep(delay_seconds);
-    // Print the message once
     printf("%s\n", message);
     free(message);
 

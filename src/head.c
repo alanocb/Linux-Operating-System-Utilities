@@ -53,7 +53,6 @@ int main(int argc, char *argv[]) {
     int quiet = 0;
     int verbose = 0;
 
-    // Verificar a opção --help antes de processar outras opções
     for (int i = 1; i < argc; i++) {
         if (strcmp(argv[i], "--help") == 0) {
             print_help(argv[0]);
@@ -94,7 +93,6 @@ int main(int argc, char *argv[]) {
     }
 
     if (optind == argc) {
-        // Nenhum ficheiro especificado, ler da entrada padrão
         if (num_bytes != -1) {
             print_head_bytes(stdin, num_bytes);
         } else {
@@ -110,7 +108,7 @@ int main(int argc, char *argv[]) {
 
             if (!quiet && (verbose || argc - optind > 1)) {
                 if (i > optind) {
-                    putchar('\n'); // Separar a saída de múltiplos ficheiros com uma linha nova
+                    putchar('\n');
                 }
                 printf("==> %s <==\n", argv[i]);
             }

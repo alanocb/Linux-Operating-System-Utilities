@@ -4,7 +4,6 @@
 #include <stdbool.h>
 #include <time.h>
 
-
 void bubbleSort(int arr[], int n);
 void selectionSort(int arr[], int n);
 void insertionSort(int arr[], int n);
@@ -15,7 +14,6 @@ void printHelp();
 
 int main(int argc, char *argv[]) {
     if (argc != 3) {
-        //printf("Usage: %s <algorithm> <numbers.txt>\n", argv[0]);
         printHelp();
         return 1;
     }
@@ -23,7 +21,6 @@ int main(int argc, char *argv[]) {
     char *algorithm = argv[1];
     char *filename = argv[2];
 
-    // Read numbers from file
     FILE *file = fopen(filename, "r");
     if (!file) {
         printf("Error: Unable to open file %s\n", filename);
@@ -38,10 +35,8 @@ int main(int argc, char *argv[]) {
     }
     fclose(file);
 
-    // Start measuring time
     clock_t start = clock();
 
-    // Print the time complexity based on the chosen algorithm
     if (strcmp(algorithm, "-b") == 0) {
         printf("Time complexity: Best Case - O(n), Worst Case - O(n^2)\n");
         bubbleSort(arr, size);
@@ -55,7 +50,7 @@ int main(int argc, char *argv[]) {
         printf("Time complexity: Best Case - O(n log n), Worst Case - O(n log n)\n");
         mergeSort(arr, 0, size - 1);
     } else if (strcmp(algorithm, "-l") == 0) {
-        printf("Time complexity: Best Case - O(n), Worst Case - O(Infinite)\n");
+        printf("Time complexity: Best Case - O(n), Worst Case - Infinite\n");
         bogoSort(arr, size);
     } else if (strcmp(algorithm, "--help") == 0) {
         printHelp();
@@ -65,30 +60,25 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    // Stop measuring time
     clock_t end = clock();
     double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
 
-    // Output sorted numbers
     printf("Sorted numbers:\n");
     for (int i = 0; i < size; i++) {
         printf("%d ", arr[i]);
     }
     printf("\n");
 
-    // Output execution time
     printf("Execution time: %f seconds\n", time_taken);
 
     free(arr);
     return 0;
 }
 
-
 void bubbleSort(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = 0; j < n - i - 1; j++) {
             if (arr[j] > arr[j + 1]) {
-                // Swap arr[j] and arr[j + 1]
                 int temp = arr[j];
                 arr[j] = arr[j + 1];
                 arr[j + 1] = temp;
@@ -96,7 +86,6 @@ void bubbleSort(int arr[], int n) {
         }
     }
 }
-
 
 void selectionSort(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
@@ -106,13 +95,11 @@ void selectionSort(int arr[], int n) {
                 minIndex = j;
             }
         }
-        // Swap arr[i] and arr[minIndex]
         int temp = arr[i];
         arr[i] = arr[minIndex];
         arr[minIndex] = temp;
     }
 }
-
 
 void insertionSort(int arr[], int n) {
     for (int i = 1; i < n; i++) {
@@ -125,7 +112,6 @@ void insertionSort(int arr[], int n) {
         arr[j + 1] = key;
     }
 }
-
 
 void merge(int arr[], int low, int mid, int high);
 void mergeSort(int arr[], int low, int high);
@@ -173,7 +159,6 @@ void merge(int arr[], int low, int mid, int high) {
         k++;
     }
 }
-
 
 bool isSorted(int arr[], int n) {
     for (int i = 0; i < n - 1; i++) {
